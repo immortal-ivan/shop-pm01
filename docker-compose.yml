@@ -18,5 +18,19 @@ services:
       timeout: 3s
       retries: 10
 
+  app:
+    build: ./app
+    environment:
+      DATABASE_URL: postgresql://shop:shop@postgres:5432/shop
+      INSTANCE_NAME: app
+    ports:
+      - "8080:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    mem_limit: 200m
+    cpus: 0.5
+    restart: on-failure
+
 volumes:
   pgdata:
