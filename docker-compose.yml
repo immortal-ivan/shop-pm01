@@ -32,5 +32,15 @@ services:
     cpus: 0.5
     restart: on-failure
 
+  k6:
+    image: grafana/k6
+    profiles: ["test"]          # не запускается при docker compose up, только вручную
+    environment:
+      BASE_URL: http://app:8000
+    volumes:
+      - ./k6:/scripts
+    depends_on:
+      - app
+
 volumes:
   pgdata:
